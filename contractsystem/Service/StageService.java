@@ -28,15 +28,15 @@ public class StageService {
         if (stage.getEndDate().isBefore(LocalDate.now())) {
             throw new ApiException("End date must be after start date");
         }
-        if (stage.getExpectedCost() <= 0) {
-            throw new ApiException("Expected cost must be positive");
-        }
         if (projectRepository.findProjectById(stage.getProjectId()) == null) {
             throw new ApiException("Project not found");
         }
         if (contractorRepository.findContractorById(stage.getContractorId()) == null) {
             throw new ApiException("Contractor not found");
         }
+
+        if (projectRepository.findProjectById(stage.getProjectId()).getContractId() != contractorRepository.findContractorById(stage.getContractorId()).getId()) throw new ApiException("Contractor have not been assigned");
+
         stage.setStatus("Pending");
         stageRepository.save(stage);
     }
