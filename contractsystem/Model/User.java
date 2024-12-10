@@ -28,6 +28,7 @@ public class User {
 
     @NotEmpty(message = "Password is required")
     @Size(min = 8, message = "Password must be at least 8 characters")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$")
     @Column(nullable = false)
     private String password;
 
@@ -36,6 +37,8 @@ public class User {
     @Column(nullable = false, unique = true, length = 15)
     private String phoneNumber;
 
+    @NotEmpty(message = "Address is required")
     @Size(max = 250, message = "Address cannot exceed 250 characters")
+    @Column(nullable = false, length = 250)
     private String address;
 }
